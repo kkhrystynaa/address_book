@@ -1,0 +1,2 @@
+fields = { field ~ ("," ~ field)* }
+field = { ASCII_DIGIT{3} ~ "-" ~ ASCII_DIGIT{3} ~ "-" ~ ASCII_DIGIT{4} }

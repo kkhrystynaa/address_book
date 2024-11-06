@@ -1,0 +1,9 @@
+[package]
+name = "address_book"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0"
+pest = "2.1"
+pest_derive = "2.1"
