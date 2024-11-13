@@ -32,7 +32,7 @@ fn main() -> Result<()> {
             }
         }
         Commands::Credits => {
-            println!("Phone Number Parser CLI\nCreated by Your Name\nVersion 1.0");
+            println!("Phone Number Parser CLI\nCreated by Kosiv KhrystynanVersion 1.0");
         }
     }
 
