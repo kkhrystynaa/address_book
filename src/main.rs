@@ -1,34 +1,40 @@
-use anyhow::{anyhow, Result};
-use pest::Parser;
-use pest_derive::Parser;
+use address_book::parse_phone_numbers;
+use anyhow::Result;
+use clap::{Parser, Subcommand};
+use std::fs;
 
 #[derive(Parser)]
-#[grammar = "./grammar.pest"]
-pub struct Grammar;
-
-fn parse_phone_numbers(input: &str) -> Result<()> {
-    let pairs = Grammar::parse(Rule::fields, input).map_err(|e| anyhow!("Parsing error: {}", e))?;
-    for pair in pairs {
-        println!("Parsed: {:?}", pair);
-    }
-    Ok(())
+#[command(
+    author = "Khrystyna Kosiv",
+    version = "1.0",
+    about = "Parses phone numbers from input"
+)]
+struct Cli {
+    #[command(subcommand)]
+    command: Commands,
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+#[derive(Subcommand)]
+enum Commands {
+    ParseFile { file_path: String },
+    Credits,
+}
 
-    #[test]
-    fn test_parse_single_phone_number() {
-        let input = "123-456-7890";
-        let result = parse_phone_numbers(input);
-        assert!(result.is_ok(), "Expected successful parsing for single phone number");
+fn main() -> Result<()> {
+    let cli = Cli::parse();
+
+    match &cli.command {
+        Commands::ParseFile { file_path } => {
+            let content = fs::read_to_string(file_path)?;
+            match parse_phone_numbers(&content) {
+                Ok(_) => println!("Parsing successful"),
+                Err(e) => eprintln!("Error: {}", e),
+            }
+        }
+        Commands::Credits => {
+            println!("Phone Number Parser CLI\nCreated by Your Name\nVersion 1.0");
+        }
     }
 
-    #[test]
-    fn test_parse_multiple_phone_numbers() {
-        let input = "123-456-7890, 555-123-4567";
-        let result = parse_phone_numbers(input);
-        assert!(result.is_ok(), "Expected successful parsing for multiple phone numbers");
-    }
+    Ok(())
 }
