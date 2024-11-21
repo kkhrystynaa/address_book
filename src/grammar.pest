@@ -1,22 +1,31 @@
-/// Головне правило, що описує набір полів, розділених комами.
-fields = { 
-    field ~ 
-    (whitespace? ~ "," ~ whitespace? ~ field)* 
+
+fields = {
+    (field | invalid_field) ~
+    (whitespace? ~ "," ~ whitespace? ~ (field | invalid_field))*
+    ~ (whitespace? ~ comment)?
 }
 
-/// Правило для опису кожного окремого поля, яке складається з трьох цифр,
-/// тире, трьох цифр і знову тире з чотирьох цифр.
-field = { 
-    ASCII_DIGIT{3} ~ "-" ~ ASCII_DIGIT{3} ~ "-" ~ ASCII_DIGIT{4} 
+field = {
+    phone_number | identifier | date
 }
 
-/// Правило для пробілів, яке допускає пробіли та табуляції між полями.
-whitespace = _{ 
-    " " | "\t" 
+phone_number = {
+    ASCII_DIGIT{3} ~ "-" ~ ASCII_DIGIT{3} ~ "-" ~ ASCII_DIGIT{4}
+}
+identifier = {
+    ASCII_ALPHANUMERIC{5,}
+}
+date = {
+    ASCII_DIGIT{4} ~ "-" ~ ASCII_DIGIT{2} ~ "-" ~ ASCII_DIGIT{2}
+}
+whitespace = _{
+    " " | "\t"
 }
 
-/// Правило для невірного поля, яке не містить цифр на початку,
-/// але може містити будь-які символи після.
-invalid_field = _{ 
-    (!ASCII_DIGIT ~ ANY)+ 
+invalid_field = _{
+    (!phone_number ~ !identifier ~ !date ~ (!"," ~ ANY)+)
+}
+
+comment = {
+    "#" ~ (!"\n" ~ ANY)*
 }

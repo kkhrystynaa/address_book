@@ -2,7 +2,8 @@
 name = "address_book"
 version = "0.1.0"
 edition = "2021"
-description = "A simple address book to parse and manage phone numbers."
+authors = ["Косів Христина kh.kosiv@ukma.edu.ua"]
+description = "Інструмент командного рядка для парсингу телефонних номерів, ідентифікаторів, дат та неправильних полів за допомогою Pest у Rust."
 license = "MIT"
 
 [dependencies]

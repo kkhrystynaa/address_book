@@ -1,7 +1,7 @@
-use address_book::parse_phone_numbers;
-use anyhow::Result;
-use clap::{Parser, Subcommand};
-use std::fs;
+use address_book::parse_phone_numbers; 
+use anyhow::Result; 
+use clap::{Parser, Subcommand}; 
+use std::fs; 
 
 #[derive(Parser)]
 #[command(
@@ -32,7 +32,7 @@ fn main() -> Result<()> {
             }
         }
         Commands::Credits => {
-            println!("Phone Number Parser CLI\nCreated by Kosiv KhrystynanVersion 1.0");
+            println!("Phone Number Parser CLI\nCreated by Khrystyna Kosiv\nVersion 1.0");
         }
     }
 
