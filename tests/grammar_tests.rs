@@ -80,5 +80,24 @@ mod tests {
         );
         Ok(())
     }
-
+    #[test]
+fn test_parse_single_email() -> Result<()> {
+    let input = "user@example.com";
+    let result = parse_phone_numbers(input); 
+    assert!(
+        result.is_ok(),
+        "Expected successful parsing for a single email"
+    );
+    Ok(())
+}
+#[test]
+fn test_parse_single_url() -> Result<()> {
+    let input = "http://www.example.com";
+    let result = parse_phone_numbers(input); 
+    assert!(
+        result.is_ok(),
+        "Expected successful parsing for a single URL"
+    );
+    Ok(())
+}
 }

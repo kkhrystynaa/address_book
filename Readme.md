@@ -30,7 +30,7 @@ Link: https://crates.io/crates/address_book Docs: https://docs.rs/address_book/0
 Граматика, що використовується для парсингу полів, складається з наступних правил:
 
 - **`fields`**: Послідовність полів, розділених комами, з можливими пробілами та коментарями.
-    ```text
+    ```
     fields = {
         (field | invalid_field) ~
         (whitespace? ~ "," ~ whitespace? ~ (field | invalid_field))*
@@ -39,30 +39,39 @@ Link: https://crates.io/crates/address_book Docs: https://docs.rs/address_book/0
     ```
 
 - **`field`**: Поле може бути номером телефону, ідентифікатором або датою.
-    ```text
+    ```
     field = { phone_number | identifier | date }
     ```
 
 - **`phone_number`**: Номер телефону у форматі `XXX-XXX-XXXX`.
-    ```text
+    ```
     phone_number = { ASCII_DIGIT{3} ~ "-" ~ ASCII_DIGIT{3} ~ "-" ~ ASCII_DIGIT{4} }
     ```
 
 - **`identifier`**: Ідентифікатор, що складається мінімум з 5 алфавітно-цифрових символів.
-    ```text
+    ```
     identifier = { ASCII_ALPHANUMERIC{5,} }
     ```
 
 - **`date`**: Дата у форматі `YYYY-MM-DD`.
-    ```text
+    ```
     date = { ASCII_DIGIT{4} ~ "-" ~ ASCII_DIGIT{2} ~ "-" ~ ASCII_DIGIT{2} }
     ```
 
 - **`invalid_field`**: Невірне поле, яке не відповідає жодному з вищезгаданих форматів.
-    ```text
+    ```
     invalid_field = { (!phone_number ~ !identifier ~ !date ~ (!"," ~ ANY)+) }
     ```
 
 - **`comment`**: Коментар, що починається з `#` і ігнорується під час парсингу.
-    ```text
+    ```
     comment = { "#" ~ (!"\n" ~ ANY)* }
+
+- **`url`**: URL, що починається з http:// та містить домен і шлях, наприклад, http://example.com/path/to/resource.
+   ```
+   url = { "http" ~ "://" ~ (ASCII_ALPHANUMERIC+ ~ "." ~ ASCII_ALPHANUMERIC+)+ ~ ("/" ~ ASCII_ALPHANUMERIC*)* }
+   ```
+- **`email`**: Адреса електронної пошти у форматі user@example.com.
+   ```
+   email = { ASCII_ALPHANUMERIC+ ~ "@" ~ ASCII_ALPHANUMERIC+ ~ "." ~ ASCII_ALPHANUMERIC+ }
+   ```

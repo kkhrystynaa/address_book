@@ -29,3 +29,9 @@ invalid_field = _{
 comment = {
     "#" ~ (!"\n" ~ ANY)*
 }
+email = {
+    ASCII_ALPHANUMERIC+ ~ "@" ~ ASCII_ALPHANUMERIC+ ~ "." ~ ASCII_ALPHANUMERIC+
+}
+url = {
+    "http" ~ "://" ~ (ASCII_ALPHANUMERIC+ ~ "." ~ ASCII_ALPHANUMERIC+)+ ~ ("/" ~ ASCII_ALPHANUMERIC*)*
+}
