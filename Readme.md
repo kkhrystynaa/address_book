@@ -1,5 +1,5 @@
 
-Link: https://crates.io/crates/address_book Docs: https://docs.rs/address_book/0.1.0/address_book/
+Link: https://crates.io/crates/address_book Docs: https://docs.rs/address_book/0.2.0/address_book/
 #Тема: address book - адресна книга
 
 # Парсер телефонних номерів та полів
